@@ -1,0 +1,8 @@
+﻿{% extends "base.html" %}
+{% block title %}About | StudentHub{% endblock %}
+{% block content %}
+<main class="container page-container">
+  <section class="page-intro"><div><p class="eyebrow eyebrow-dark">ABOUT THE PROJECT</p><h1>Welcome to StudentHub</h1><p class="intro-copy">A learning project that brings a friendly student management dashboard to life with HTML, CSS, JavaScript, Python, and Flask.</p></div></section>
+  <section class="panel about-panel"><span class="about-mark" aria-hidden="true">SH</span><div><h2>One step at a time</h2><p>This first version focuses on the frontend and Flask page routes. Student information is sample content for now; database storage and account features are planned for a later stage.</p><a class="text-link" href="{{ url_for('home') }}">Back to dashboard <span aria-hidden="true">→</span></a></div></section>
+</main>
+{% endblock %}

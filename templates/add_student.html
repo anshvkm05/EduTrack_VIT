@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Add student | StudentHub{% endblock %}
+{% block content %}
+<section class="container page-container">
+  <div class="page-intro"><div><p class="eyebrow eyebrow-dark">GROW YOUR COMMUNITY</p><h1>Add a student</h1><p class="intro-copy">Enter the student's details to add them to the current roster.</p></div></div>
+  <form class="panel student-form" method="post">
+    <div class="form-grid">
+      <label for="name">Full name<input id="name" name="name" type="text" autocomplete="name" placeholder="e.g. Priya Nair" required></label>
+      <label for="course">Course<input id="course" name="course" type="text" placeholder="e.g. BSc Computer Science" required></label>
+      <label for="status">Status<select id="status" name="status"><option value="Active">Active</option><option value="Pending">Pending</option></select></label>
+    </div>
+    <div class="form-actions"><a class="button button-secondary" href="{{ url_for('students') }}">Cancel</a><button class="button button-primary" type="submit">Add student</button></div>
+  </form>
+</section>
+{% endblock %}

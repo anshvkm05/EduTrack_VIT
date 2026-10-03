@@ -1,0 +1,15 @@
+﻿{% extends "base.html" %}
+{% block title %}Students | StudentHub{% endblock %}
+{% block content %}
+<main class="container page-container">
+  <section class="page-intro"><div><p class="eyebrow eyebrow-dark">YOUR COMMUNITY</p><h1>Students</h1><p class="intro-copy">Meet the people who make your learning community.</p></div><a class="button button-primary" href="{{ url_for('add_student') }}">+ Add student</a></section>
+  <section class="panel" aria-labelledby="students-heading">
+    <div class="section-heading"><div><h2 id="students-heading">All students</h2><p class="panel-subtitle">{{ students|length }} student{{ '' if students|length == 1 else 's' }} in this session.</p></div></div>
+    <div class="table-wrap"><table><thead><tr><th scope="col">Student</th><th scope="col">Student ID</th><th scope="col">Course</th><th scope="col">Status</th></tr></thead><tbody>
+      {% for student in students %}
+      <tr><td><span class="avatar avatar-{{ student.color }}">{{ student.avatar }}</span><span class="student-name">{{ student.name }}</span></td><td class="muted">{{ student.id }}</td><td>{{ student.course }}</td><td><span class="status {% if student.status == 'Pending' %}status-pending{% endif %}"><i></i>{{ student.status }}</span></td></tr>
+      {% endfor %}
+    </tbody></table></div>
+  </section>
+</main>
+{% endblock %}

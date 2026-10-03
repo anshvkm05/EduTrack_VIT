@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+  <title>{% block title %}StudentHub{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+  <header class="navbar">
+    <a class="logo" href="{{ url_for('home') }}" aria-label="StudentHub home">Student<span>Hub</span></a>
+    <nav aria-label="Main navigation">
+      <a href="{{ url_for('home') }}" {% if request.endpoint == 'home' %}aria-current="page"{% endif %}>Dashboard</a>
+      <a href="{{ url_for('students') }}" {% if request.endpoint == 'students' %}aria-current="page"{% endif %}>Students</a>
+      <a href="{{ url_for('add_student') }}" {% if request.endpoint == 'add_student' %}aria-current="page"{% endif %}>Add student</a>
+      <a href="{{ url_for('about') }}" {% if request.endpoint == 'about' %}aria-current="page"{% endif %}>About</a>
+    </nav>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<div class="flash-container">{% for category, message in messages %}<p class="flash flash-{{ category }}">{{ message }}</p>{% endfor %}</div>{% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+
+  <footer class="footer"><p>StudentHub <span aria-hidden="true">·</span> Student management, made simple.</p></footer>
+</body>
+</html>
