@@ -1,31 +1,154 @@
-﻿{% extends "base.html" %}
-{% block title %}Dashboard | StudentHub{% endblock %}
+{% extends "base.html" %}
+{% block title %}Dashboard | EduTrack VIT{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
 {% block content %}
-<main class="container">
-  <section class="hero">
-    <div class="hero-copy">
-      <p class="eyebrow">STUDENT MANAGEMENT SYSTEM</p>
-      <h1>Manage students<br><span>with confidence.</span></h1>
-      <p class="hero-description">A clear, welcoming workspace to keep your student community organized and moving forward.</p>
-      <a class="button button-light" href="{{ url_for('add_student') }}">Add a student <span aria-hidden="true">→</span></a>
+
+<!-- ── Stat cards ─────────────────────────────────────────────── -->
+<div class="stats-grid">
+
+  <div class="stat-card">
+    <div class="stat-icon c-indigo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
     </div>
-    <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-orb"><span>SH</span></div><span class="spark spark-one">✦</span><span class="spark spark-two">✳</span></div>
-  </section>
+    <div>
+      <div class="stat-label">Total Students</div>
+      <div class="stat-value">{{ total }}</div>
+      <div class="stat-note">Across all courses</div>
+    </div>
+  </div>
 
-  <section class="stats" aria-label="Student overview">
-    <article class="stat-card"><span class="stat-icon icon-blue" aria-hidden="true">♧</span><div><p class="stat-label">Total students</p><p class="stat-number">{{ total_students }}</p><p class="stat-note">Across all programs</p></div></article>
-    <article class="stat-card"><span class="stat-icon icon-green" aria-hidden="true">✓</span><div><p class="stat-label">Active students</p><p class="stat-number">85</p><p class="stat-note">Currently enrolled</p></div></article>
-    <article class="stat-card"><span class="stat-icon icon-violet" aria-hidden="true">▦</span><div><p class="stat-label">Courses</p><p class="stat-number">6</p><p class="stat-note">Programs available</p></div></article>
-  </section>
+  <div class="stat-card">
+    <div class="stat-icon c-green">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+    <div>
+      <div class="stat-label">Active Students</div>
+      <div class="stat-value">{{ active }}</div>
+      <div class="stat-note">Currently enrolled</div>
+    </div>
+  </div>
 
-  <section class="panel" aria-labelledby="recent-heading">
-    <div class="section-heading"><div><p class="eyebrow eyebrow-dark">YOUR COMMUNITY</p><h2 id="recent-heading">Recent students</h2></div><a class="text-link" href="{{ url_for('students') }}">View all students <span aria-hidden="true">→</span></a></div>
-    <div class="table-wrap"><table><thead><tr><th scope="col">Student</th><th scope="col">Student ID</th><th scope="col">Course</th><th scope="col">Status</th></tr></thead><tbody>
-      {% for student in students|reverse %}
-      <tr><td><span class="avatar avatar-{{ student.color }}">{{ student.avatar }}</span><span class="student-name">{{ student.name }}</span></td><td class="muted">{{ student.id }}</td><td>{{ student.course }}</td><td><span class="status {% if student.status == 'Pending' %}status-pending{% endif %}"><i></i>{{ student.status }}</span></td></tr>
-      {% endfor %}
-    </tbody></table></div>
-  </section>
-</main>
+  <div class="stat-card">
+    <div class="stat-icon c-amber">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="1" x2="12" y2="23"/>
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+      </svg>
+    </div>
+    <div>
+      <div class="stat-label">Fees This Month</div>
+      <div class="stat-value">₹{{ "{:,}".format(fees_month | int) }}</div>
+      <div class="stat-note">Payments collected</div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon c-cyan">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+        <polyline points="9 16 11 18 15 14"/>
+      </svg>
+    </div>
+    <div>
+      <div class="stat-label">Attendance Today</div>
+      <div class="stat-value">{{ att_rate }}%</div>
+      <div class="stat-note">Present rate</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Charts ─────────────────────────────────────────────────── -->
+<div class="charts-grid">
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Enrollment by Course</div>
+        <div class="card-sub">Student distribution</div>
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="chart-enrollment"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Monthly Fee Collection</div>
+        <div class="card-sub">Last 6 months</div>
+      </div>
+    </div>
+    <div class="chart-wrap" style="height:240px;">
+      <canvas id="chart-fees"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Recent students ────────────────────────────────────────── -->
+<div class="card">
+  <div class="card-header">
+    <div>
+      <div class="card-title">Recently Enrolled</div>
+      <div class="card-sub">Last 5 students</div>
+    </div>
+    <a href="{{ url_for('students') }}" class="btn btn-ghost btn-sm">
+      View all
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+  </div>
+
+  {% if recent %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>ID</th>
+          <th>Course</th>
+          <th>Enrolled</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in recent %}
+        <tr>
+          <td>
+            <div class="student-cell">
+              <span class="avatar av-{{ s.color }}">{{ s.avatar }}</span>
+              <span class="student-name">{{ s.name }}</span>
+            </div>
+          </td>
+          <td class="td-muted">{{ s.display_id }}</td>
+          <td><span class="course-badge">{{ s.course or '—' }}</span></td>
+          <td class="td-muted">{{ s.enrollment_date or '—' }}</td>
+          <td>
+            <span class="badge badge-{{ s.status | lower }}">{{ s.status }}</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    <p>No students yet. <a href="{{ url_for('add_student') }}" class="text-accent">Add the first one →</a></p>
+  </div>
+  {% endif %}
+</div>
+
 {% endblock %}
-

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Fee Records | EduTrack VIT{% endblock %}
+{% block page_title %}Fee Records{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-eyebrow">Finance</div>
+    <h1 class="page-h1">Fee Records</h1>
+    <p class="page-sub">{{ records | length }} payment{{ '' if records | length == 1 else 's' }} · ₹{{ "{:,}".format(total | int) }} collected</p>
+  </div>
+  <a href="{{ url_for('add_fee') }}" class="btn btn-primary">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+    Log Payment
+  </a>
+</div>
+
+<!-- Month filter -->
+<form method="get" class="filter-bar" style="margin-bottom:18px;">
+  <label class="form-label" style="color:var(--ink-2);margin:0;white-space:nowrap;">Filter by month:</label>
+  <input class="form-control" name="month" type="month" value="{{ month }}" style="width:180px;">
+  <button class="btn btn-secondary" type="submit">Apply</button>
+</form>
+
+<div class="card" style="padding:0;overflow:hidden;">
+  {% if records %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Course</th>
+          <th>Month</th>
+          <th>Amount</th>
+          <th>Paid On</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in records %}
+        <tr>
+          <td class="fw-600">{{ r.student_name }}</td>
+          <td><span class="course-badge">{{ r.course or '—' }}</span></td>
+          <td class="td-muted">{{ r.month }}</td>
+          <td style="color:var(--green);font-weight:600;">₹{{ "{:,}".format(r.amount | int) }}</td>
+          <td class="td-muted">{{ r.paid_on or '—' }}</td>
+          <td class="td-muted">{{ r.note or '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+    </svg>
+    <p>No payments recorded for {{ month }}. <a href="{{ url_for('add_fee') }}" class="text-accent">Log one →</a></p>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

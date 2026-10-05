@@ -1,14 +1,14 @@
 {% extends "base.html" %}
-{% block title %}Enroll Student | EduTrack VIT{% endblock %}
-{% block page_title %}Enroll Student{% endblock %}
+{% block title %}Edit Student | EduTrack VIT{% endblock %}
+{% block page_title %}Edit Student{% endblock %}
 
 {% block content %}
 
 <div class="page-header">
   <div class="page-header-left">
     <div class="page-eyebrow">Students</div>
-    <h1 class="page-h1">Enroll New Student</h1>
-    <p class="page-sub">Fill in the details below to add a student to the roster.</p>
+    <h1 class="page-h1">Edit — {{ student.name }}</h1>
+    <p class="page-sub">Update the student's details below.</p>
   </div>
   <a href="{{ url_for('students') }}" class="btn btn-secondary">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -25,28 +25,28 @@
       <div class="form-group">
         <label class="form-label" for="name">Full Name *</label>
         <input class="form-control" id="name" name="name" type="text"
-               placeholder="e.g. Priya Nair" required autofocus>
+               value="{{ student.name }}" required>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="email">Email Address *</label>
         <input class="form-control" id="email" name="email" type="email"
-               placeholder="e.g. priya.nair@vit.ac.in" required>
+               value="{{ student.email }}" required>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="phone">Phone Number</label>
         <input class="form-control" id="phone" name="phone" type="tel"
-               placeholder="e.g. 9876543210">
+               value="{{ student.phone or '' }}">
       </div>
 
       <div class="form-group">
         <label class="form-label" for="gender">Gender</label>
         <select class="form-control" id="gender" name="gender">
           <option value="">— Select —</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
+          {% for g in ['Male', 'Female', 'Other'] %}
+          <option value="{{ g }}" {% if student.gender == g %}selected{% endif %}>{{ g }}</option>
+          {% endfor %}
         </select>
       </div>
 
@@ -55,7 +55,7 @@
         <select class="form-control" id="course_id" name="course_id" required>
           <option value="">— Select course —</option>
           {% for c in courses %}
-          <option value="{{ c.id }}">{{ c.name }}</option>
+          <option value="{{ c.id }}" {% if student.course_id == c.id %}selected{% endif %}>{{ c.name }}</option>
           {% endfor %}
         </select>
       </div>
@@ -63,9 +63,11 @@
       <div class="form-group">
         <label class="form-label" for="batch_id">Batch</label>
         <select class="form-control" id="batch_id" name="batch_id">
-          <option value="">— Select batch —</option>
+          <option value="">— No batch —</option>
           {% for b in batches %}
-          <option value="{{ b.id }}" data-course="{{ b.course_id }}">
+          <option value="{{ b.id }}"
+                  data-course="{{ b.course_id }}"
+                  {% if current_batch_id == b.id %}selected{% endif %}>
             {{ b.name }} ({{ b.time_slot }})
           </option>
           {% endfor %}
@@ -74,15 +76,16 @@
 
       <div class="form-group">
         <label class="form-label" for="date_of_birth">Date of Birth</label>
-        <input class="form-control" id="date_of_birth" name="date_of_birth" type="date">
+        <input class="form-control" id="date_of_birth" name="date_of_birth" type="date"
+               value="{{ student.date_of_birth or '' }}">
       </div>
 
       <div class="form-group">
         <label class="form-label" for="status">Status</label>
         <select class="form-control" id="status" name="status">
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
-          <option value="Pending">Pending</option>
+          {% for s in ['Active', 'Inactive', 'Pending'] %}
+          <option value="{{ s }}" {% if student.status == s %}selected{% endif %}>{{ s }}</option>
+          {% endfor %}
         </select>
       </div>
 
@@ -91,10 +94,7 @@
     <div class="form-actions">
       <a href="{{ url_for('students') }}" class="btn btn-secondary">Cancel</a>
       <button class="btn btn-primary" type="submit">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-        </svg>
-        Enroll Student
+        Save Changes
       </button>
     </div>
   </form>

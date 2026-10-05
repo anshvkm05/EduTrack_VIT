@@ -1,8 +1,99 @@
-﻿{% extends "base.html" %}
-{% block title %}About | StudentHub{% endblock %}
+{% extends "base.html" %}
+{% block title %}About | EduTrack VIT{% endblock %}
+{% block page_title %}About{% endblock %}
+
 {% block content %}
-<main class="container page-container">
-  <section class="page-intro"><div><p class="eyebrow eyebrow-dark">ABOUT THE PROJECT</p><h1>Welcome to StudentHub</h1><p class="intro-copy">A learning project that brings a friendly student management dashboard to life with HTML, CSS, JavaScript, Python, and Flask.</p></div></section>
-  <section class="panel about-panel"><span class="about-mark" aria-hidden="true">SH</span><div><h2>One step at a time</h2><p>This first version focuses on the frontend and Flask page routes. Student information is sample content for now; database storage and account features are planned for a later stage.</p><a class="text-link" href="{{ url_for('home') }}">Back to dashboard <span aria-hidden="true">→</span></a></div></section>
-</main>
+
+<!-- Hero banner -->
+<div class="about-hero" style="margin-bottom:20px;">
+  <div class="page-eyebrow" style="margin-bottom:10px;">Coaching Institute Management System</div>
+  <div class="about-title">EduTrack <span>VIT</span></div>
+  <p class="about-desc" style="margin-top:12px;">
+    EduTrack VIT is a full-stack web application built with <strong>Flask</strong> and <strong>SQLite3</strong>
+    to streamline the daily operations of coaching institutes — from student enrollment and batch scheduling
+    to fee collection, attendance tracking, and PDF reporting. It replaces Excel sheets and WhatsApp groups
+    with a single, clean admin interface.
+  </p>
+</div>
+
+<!-- Features grid -->
+<div style="margin-bottom:24px;">
+  <div class="page-eyebrow" style="margin-bottom:14px;">Core Features</div>
+  <div class="features-grid">
+
+    <div class="feature-card">
+      <div class="feature-icon">🔐</div>
+      <div class="feature-name">Secure Admin Login</div>
+      <div class="feature-desc">Session-based authentication with Flask-Login and Werkzeug password hashing. No student can access the system.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <div class="feature-name">Live Dashboard</div>
+      <div class="feature-desc">Real-time stats with Chart.js visualisations — enrollment by course (doughnut) and monthly fee trend (bar chart).</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">👨‍🎓</div>
+      <div class="feature-name">Student Management</div>
+      <div class="feature-desc">Full CRUD — enroll, edit, deactivate students. Search by name, email, or phone. Filter by status.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🏫</div>
+      <div class="feature-name">Batch Scheduling</div>
+      <div class="feature-desc">Organise students into batches (Morning / Evening / Weekend) per course with time-slot labels.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">💳</div>
+      <div class="feature-name">Fee Ledger</div>
+      <div class="feature-desc">Log monthly payments, filter by month, and see total collections at a glance. No pending slip goes untracked.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <div class="feature-name">Attendance Tracking</div>
+      <div class="feature-desc">Mark per-student, per-batch, per-day attendance with toggle switches. History is preserved and revisitable.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📄</div>
+      <div class="feature-name">PDF Reports</div>
+      <div class="feature-desc">Generate a professional student report card (profile + fee history) as a downloadable PDF using fpdf2.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🌙</div>
+      <div class="feature-name">Dark Mode UI</div>
+      <div class="feature-desc">Premium dark-mode design system with sidebar navigation, glassmorphism cards, and smooth micro-animations.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <div class="feature-name">Responsive Layout</div>
+      <div class="feature-desc">Collapses gracefully on tablet and mobile — sidebar shrinks to icon-only, grids stack vertically.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Tech stack -->
+<div class="card">
+  <div class="card-header"><div class="card-title">Technology Stack</div></div>
+  <table>
+    <thead>
+      <tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="fw-600">Backend</td><td><span class="course-badge">Python 3 · Flask</span></td><td class="td-muted">Routing, templating, session management</td></tr>
+      <tr><td class="fw-600">Auth</td><td><span class="course-badge">Flask-Login · Werkzeug</span></td><td class="td-muted">Admin authentication &amp; password hashing</td></tr>
+      <tr><td class="fw-600">Database</td><td><span class="course-badge">SQLite3</span></td><td class="td-muted">Relational storage with 7-table schema</td></tr>
+      <tr><td class="fw-600">PDF</td><td><span class="course-badge">fpdf2</span></td><td class="td-muted">Student report card generation</td></tr>
+      <tr><td class="fw-600">Charts</td><td><span class="course-badge">Chart.js CDN</span></td><td class="td-muted">Doughnut &amp; bar charts on the dashboard</td></tr>
+      <tr><td class="fw-600">Frontend</td><td><span class="course-badge">HTML · CSS · JS</span></td><td class="td-muted">Vanilla — no framework, no build step</td></tr>
+    </tbody>
+  </table>
+</div>
+
 {% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Log Payment | EduTrack VIT{% endblock %}
+{% block page_title %}Log Payment{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-eyebrow">Finance</div>
+    <h1 class="page-h1">Log Fee Payment</h1>
+    <p class="page-sub">Record a student's monthly fee payment.</p>
+  </div>
+  <a href="{{ url_for('fees') }}" class="btn btn-secondary">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Back to Records
+  </a>
+</div>
+
+<div class="card" style="max-width:560px;">
+  <form method="post">
+    <div class="form-grid" style="grid-template-columns: 1fr;">
+
+      <div class="form-group">
+        <label class="form-label" for="student_id">Student *</label>
+        <select class="form-control" id="student_id" name="student_id" required>
+          <option value="">— Select active student —</option>
+          {% for s in students %}
+          <option value="{{ s.id }}">{{ s.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="month">Month *</label>
+        <input class="form-control" id="month" name="month" type="month"
+               value="{{ default_month }}" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="amount">Amount (₹) *</label>
+        <input class="form-control" id="amount" name="amount" type="number"
+               min="1" step="1" placeholder="e.g. 5000" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="note">Note</label>
+        <input class="form-control" id="note" name="note" type="text"
+               placeholder="e.g. Monthly tuition fee">
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <a href="{{ url_for('fees') }}" class="btn btn-secondary">Cancel</a>
+      <button class="btn btn-primary" type="submit">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        Record Payment
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

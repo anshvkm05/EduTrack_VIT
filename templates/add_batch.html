@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Add Batch | EduTrack VIT{% endblock %}
+{% block page_title %}Add Batch{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-eyebrow">Schedule</div>
+    <h1 class="page-h1">Create New Batch</h1>
+    <p class="page-sub">Add a new batch under an existing course.</p>
+  </div>
+  <a href="{{ url_for('batches') }}" class="btn btn-secondary">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Back to Batches
+  </a>
+</div>
+
+<div class="card" style="max-width:520px;">
+  <form method="post">
+    <div class="form-grid" style="grid-template-columns: 1fr;">
+
+      <div class="form-group">
+        <label class="form-label" for="course_id">Course *</label>
+        <select class="form-control" id="course_id" name="course_id" required>
+          <option value="">— Select course —</option>
+          {% for c in courses %}
+          <option value="{{ c.id }}">{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="name">Batch Name *</label>
+        <input class="form-control" id="name" name="name" type="text"
+               placeholder="e.g. BCA Weekend" required autofocus>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="time_slot">Time Slot</label>
+        <input class="form-control" id="time_slot" name="time_slot" type="text"
+               placeholder="e.g. Sat–Sun 10:00 AM – 1:00 PM">
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <a href="{{ url_for('batches') }}" class="btn btn-secondary">Cancel</a>
+      <button class="btn btn-primary" type="submit">
+        Create Batch
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
