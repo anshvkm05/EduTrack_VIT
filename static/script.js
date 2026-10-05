@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'rgba(245,158,11,0.85)',
                 'rgba(244,63,94,0.85)',
               ],
-              borderColor: '#161d2f',
+              borderColor: '#FFFFFF',
               borderWidth: 3,
               hoverOffset: 8,
             }],
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             plugins: {
               legend: {
                 position: 'bottom',
-                labels: { color: '#94a3b8', padding: 14, font: { size: 11 }, boxWidth: 12, borderRadius: 4 },
+                labels: { color: '#6B7280', padding: 14, font: { size: 11 }, boxWidth: 12, borderRadius: 4 },
               },
               tooltip: {
                 callbacks: {
@@ -66,11 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
             datasets: [{
               label: 'Fee Collected (Rs.)',
               data,
-              backgroundColor: 'rgba(99,102,241,0.5)',
-              borderColor:     'rgba(99,102,241,0.9)',
+              backgroundColor: 'rgba(95,13,128,0.5)',
+              borderColor:     'rgba(95,13,128,0.9)',
               borderWidth: 2,
               borderRadius: 7,
-              hoverBackgroundColor: 'rgba(129,140,248,0.7)',
+              hoverBackgroundColor: 'rgba(115,20,144,0.7)',
             }],
           },
           options: {
@@ -86,13 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             scales: {
               x: {
-                grid: { color: 'rgba(37,45,66,0.8)' },
-                ticks: { color: '#64748b', font: { size: 11 } },
+                grid: { color: '#ECEEF2' },
+                ticks: { color: '#6B7280', font: { size: 11 } },
               },
               y: {
-                grid: { color: 'rgba(37,45,66,0.8)' },
+                grid: { color: '#ECEEF2' },
                 ticks: {
-                  color: '#64748b',
+                  color: '#6B7280',
                   font: { size: 11 },
                   callback: v => 'Rs. ' + v.toLocaleString(),
                 },
