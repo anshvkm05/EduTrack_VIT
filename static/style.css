@@ -202,7 +202,6 @@ button { font: inherit; cursor: pointer; border: none; }
 .content {
   flex: 1;
   padding: 28px;
-  max-width: 1140px;
   width: 100%;
 }
 
